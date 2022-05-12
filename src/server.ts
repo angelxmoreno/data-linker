@@ -9,7 +9,7 @@ import { WriteController } from '@routes/WriteController';
 import { HttpException } from './exceptions/HttpException';
 
 const server = express();
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res) => {
     if (err instanceof HttpException) {
         res.status(err.status).json(err);
     } else {

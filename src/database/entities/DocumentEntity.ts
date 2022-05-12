@@ -55,15 +55,6 @@ export class DocumentEntity extends EntityBase {
     fileName: string;
 
     @Column({
-        type: 'varchar',
-        nullable: false,
-        length: 10,
-        default: undefined,
-    })
-    @Index({ unique: false })
-    extension: string;
-
-    @Column({
         type: 'text',
         nullable: false,
         default: undefined,

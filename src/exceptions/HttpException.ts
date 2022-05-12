@@ -1,6 +1,7 @@
 export class HttpException extends Error {
     public status: number;
     public message: string;
+
     constructor(status: number, message: string, type: string) {
         super(message);
         this.status = status;
@@ -12,6 +13,8 @@ export class HttpException extends Error {
         return {
             type: this.name,
             error: this.message,
+            errors: undefined,
+            trace: this.stack,
         };
     }
 }

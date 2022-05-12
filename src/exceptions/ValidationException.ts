@@ -28,6 +28,7 @@ export class ValidationException extends HttpException {
             type: this.name,
             error: this.message,
             errors: this.normalizedErrors,
+            trace: this.stack,
         };
     }
 }
