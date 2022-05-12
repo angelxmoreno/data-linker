@@ -1,6 +1,6 @@
 import { Column, Entity, Index } from 'typeorm';
 import { EntityBase } from '@database/entities/EntityBase';
-import { Validate } from 'class-validator';
+import { IsDefined, Validate } from 'class-validator';
 import ExistsInTable from '@database/validators/ExistsInTable';
 import { UserEntity } from '@database/entities/UserEntity';
 
@@ -13,6 +13,7 @@ export class DocumentEntity extends EntityBase {
         default: undefined,
     })
     @Index({ unique: false })
+    @IsDefined()
     subjectId: string;
 
     @Column({
@@ -22,6 +23,7 @@ export class DocumentEntity extends EntityBase {
         default: undefined,
     })
     @Index({ unique: false })
+    @IsDefined()
     classification: string;
 
     @Column({
@@ -32,6 +34,7 @@ export class DocumentEntity extends EntityBase {
     })
     @Index({ unique: false })
     @Validate(ExistsInTable, [UserEntity, 'id'])
+    @IsDefined()
     publisherId: string;
 
     @Column({
