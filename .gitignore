@@ -2,3 +2,5 @@
 build
 node_modules
 .eslintcache
+logs/*
+!logs/.gitkeep
