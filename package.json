@@ -1,0 +1,41 @@
+{
+    "name": "data-linker",
+    "version": "1.0.0",
+    "main": "build/server.js",
+    "repository": "git@github.com:angelxmoreno/data-linker.git",
+    "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
+    "license": "MIT",
+    "engines": {
+        "node": "14.17.0",
+        "yarn": "1.22.17"
+    },
+    "scripts": {
+        "start": "cross-env NODE_ENV=production TS_NODE_BASEURL=./build node -r tsconfig-paths/register build/server.js",
+        "dev": "cross-env NODE_ENV=development nodemon",
+        "tsc": "tsc  -p .",
+        "clean": "rimraf build/*",
+        "build": "yarn clean && yarn tsc",
+        "lint": "yarn eslint . --ext json,js,ts --cache",
+        "lint:fix": "yarn eslint . --ext json,js,ts --fix --cache"
+    },
+    "dependencies": {
+        "cross-env": "^7.0.3",
+        "debug": "^4.3.4",
+        "dotenv": "^16.0.1",
+        "dotenv-expand": "^8.0.3",
+        "ts-node": "^10.7.0",
+        "tsconfig-paths": "^4.0.0",
+        "tslib": "^2.4.0"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.23.0",
+        "@typescript-eslint/parser": "^5.23.0",
+        "eslint": "^8.15.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "nodemon": "^2.0.16",
+        "prettier": "^2.6.2",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.6.4"
+    }
+}
