@@ -25,8 +25,8 @@ export class UserEntity extends EntityBase {
     })
     role: UserRole;
 
-    @Column({ type: 'char', length: 64, nullable: true, default: null })
+    @Column({ type: 'char', length: 64, nullable: false, default: undefined })
     @Index({ unique: true })
     @Validate(IsUniqueInTable, [UserEntity, 'apiKey'])
-    apiKey?: string;
+    apiKey: string;
 }

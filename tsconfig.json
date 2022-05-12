@@ -21,6 +21,7 @@
         "typeRoots": ["node_modules/@types"],
         "baseUrl": "src",
         "paths": {
+            "@cli/*": ["cli/*"],
             "@database/*": ["database/*"],
             "@loggers/*": ["loggers/*"],
             "@routes/*": ["routes/*"],

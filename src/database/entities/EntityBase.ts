@@ -40,7 +40,7 @@ export class EntityBase extends BaseEntity {
     @Exclude()
     deleted: Date;
 
-    static build<T>(data: Partial<T>): Partial<T> {
+    static build<T extends BaseEntity>(data: Partial<T>): Partial<T> {
         const entity = this.create();
         return Object.assign(entity, data);
     }
