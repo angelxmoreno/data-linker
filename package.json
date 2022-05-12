@@ -16,7 +16,11 @@
         "clean": "rimraf build/*",
         "build": "yarn clean && yarn tsc",
         "lint": "yarn eslint . --ext json,js,ts --cache",
-        "lint:fix": "yarn eslint . --ext json,js,ts --fix --cache"
+        "lint:fix": "yarn eslint . --ext json,js,ts --fix --cache",
+        "docker:compose": "docker-compose --env-file .env --file ./docker/docker-compose.yml",
+        "docker:start": "yarn docker:compose up",
+        "docker:restart": "yarn docker:compose restart",
+        "docker:stop": "yarn docker:compose stop"
     },
     "dependencies": {
         "@types/body-parser": "^1.19.2",
