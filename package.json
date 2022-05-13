@@ -30,6 +30,7 @@
         "@types/debug": "^4.1.7",
         "@types/express": "^4.17.13",
         "@types/multer": "^1.4.7",
+        "aws-sdk": "^2.1134.0",
         "body-parser": "^1.20.0",
         "chalk": "2.4",
         "class-transformer": "^0.5.1",

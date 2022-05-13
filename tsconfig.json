@@ -27,6 +27,7 @@
             "@exceptions/*": ["exceptions/*"],
             "@loggers/*": ["loggers/*"],
             "@routes/*": ["routes/*"],
+            "@services/*": ["services/*"],
             "@utils/*": ["utils/*"],
             "@validation/*": ["validation/*"]
         }

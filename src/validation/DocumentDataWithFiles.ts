@@ -28,7 +28,7 @@ export default class DocumentDataWithFile extends DocumentData {
 
         entity.contentType = this.mimetype;
         entity.fileName = this.originalname;
-        entity.s3Path = this.path;
+        entity.filePath = this.path;
 
         return entity;
     }

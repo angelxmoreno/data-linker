@@ -59,5 +59,12 @@ export class DocumentEntity extends EntityBase {
         nullable: false,
         default: undefined,
     })
+    filePath: string;
+
+    @Column({
+        type: 'text',
+        nullable: false,
+        default: undefined,
+    })
     s3Path: string;
 }

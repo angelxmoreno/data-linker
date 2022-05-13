@@ -32,7 +32,7 @@ export default class DocumentDataWithContents extends DocumentData {
         entity.contentType = isJson ? 'application/json' : 'text/plain';
         entity.fileName = this.fileName;
         fs.writeFileSync(uploadsPath, this.plainText);
-        entity.s3Path = uploadsPath;
+        entity.filePath = uploadsPath;
 
         return entity;
     }

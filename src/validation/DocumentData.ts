@@ -21,7 +21,6 @@ export default class DocumentData extends BaseValidation {
     static fromRequest<T extends DocumentData>(this: ClassConstructor<T>, req: Request): T {
         const data: Partial<DocumentData> = {
             ...req.body,
-            ...req.body.contents,
             ...req.file,
             publisherId: req.user.id,
         };

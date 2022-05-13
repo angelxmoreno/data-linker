@@ -6,10 +6,11 @@ import bodyParser from 'body-parser';
 import { IndexRouter } from '@routes/IndexRoute';
 import { applyAuth } from './auth';
 import { WriteController } from '@routes/WriteController';
-import { HttpException } from './exceptions/HttpException';
+import { HttpException } from '@exceptions/HttpException';
 
 const server = express();
-const errorHandler: ErrorRequestHandler = (err, req, res) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     if (err instanceof HttpException) {
         res.status(err.status).json(err);
     } else {
