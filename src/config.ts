@@ -11,6 +11,12 @@ const config = {
         synchronize: env.asBoolean('DATABASE_SYNC'),
         migrationsRun: env.asBoolean('DATABASE_AUTO_MIGRATIONS'),
     },
+    aws: {
+        region: env.asString('AWS_REGION'),
+        bucket: env.asString('AWS_S3_BUCKET'),
+        accessKeyId: env.asString('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env.asString('AWS_SECRET_ACCESS_KEY'),
+    },
 };
 
 type AppConfig = typeof config;

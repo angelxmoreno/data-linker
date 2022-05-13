@@ -6,8 +6,8 @@
     "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
     "license": "MIT",
     "engines": {
-        "node": "14.17.0",
-        "yarn": "1.22.17"
+        "node": "^14.0.0",
+        "yarn": "^1.0.0"
     },
     "scripts": {
         "start": "cross-env NODE_ENV=production TS_NODE_BASEURL=./build node -r tsconfig-paths/register build/app.js",
@@ -30,6 +30,7 @@
         "@types/debug": "^4.1.7",
         "@types/express": "^4.17.13",
         "@types/multer": "^1.4.7",
+        "aws-sdk": "^2.1134.0",
         "body-parser": "^1.20.0",
         "chalk": "2.4",
         "class-transformer": "^0.5.1",
@@ -66,6 +67,7 @@
         "@types/figlet": "^1.5.4",
         "@types/inquirer": "^8.2.1",
         "@types/lodash": "^4.14.182",
+        "@types/node": "^17.0.32",
         "@types/passport": "^1.0.7",
         "@types/pluralize": "^0.0.29",
         "@types/winston": "^2.4.4",
