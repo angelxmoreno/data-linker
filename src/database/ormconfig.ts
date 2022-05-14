@@ -1,28 +1,29 @@
 import CakePhpNamingStrategy from '@database/CakePhpNamingStrategy';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-import env from '@utils/env';
+import appConfig from '../config';
+import { DriverBuilderOptions, TypeOrmDriverBuilder } from '@utils/TypeOrmDriverBuilder';
 
-const appConfig = {
-    database: {
-        url: env.asString('DATABASE_URL'),
-        logging: env.asBoolean('DATABASE_LOGGING'),
-        synchronize: env.asBoolean('DATABASE_SYNC'),
-        migrationsRun: env.asBoolean('DATABASE_AUTO_MIGRATIONS'),
+const options: DriverBuilderOptions = {
+    sharedOptions: {
+        namingStrategy: new CakePhpNamingStrategy(),
+        synchronize: appConfig.database.synchronize,
+        logging: appConfig.database.logging,
+        migrationsRun: appConfig.database.migrationsRun,
+        entities: [`${__dirname}/entities/*Entity.{js,ts}`],
+        subscribers: [`${__dirname}/subscribers/*.{js,ts}`],
+        migrations: [`${__dirname}/migrations/*.{js,ts}`],
+        migrationsTableName: 'migrations',
+    },
+    mysql: {
+        type: 'mysql',
+        url: appConfig.database.url,
+        charset: 'utf8mb4',
+        timezone: 'Z',
+    },
+    postgres: {
+        type: 'postgres',
+        url: appConfig.database.url,
     },
 };
-const dbOptions: MysqlConnectionOptions = {
-    type: 'mysql',
-    url: appConfig.database.url,
-    charset: 'utf8mb4',
-    timezone: 'Z',
-    namingStrategy: new CakePhpNamingStrategy(),
-    synchronize: appConfig.database.synchronize,
-    logging: appConfig.database.logging,
-    migrationsRun: appConfig.database.migrationsRun,
-    entities: [`${__dirname}/entities/*Entity.{js,ts}`],
-    subscribers: [`${__dirname}/subscribers/*.{js,ts}`],
-    migrations: [`${__dirname}/migrations/*.{js,ts}`],
-    migrationsTableName: 'migrations',
-};
 
+const dbOptions = TypeOrmDriverBuilder.build(options);
 export default dbOptions;
