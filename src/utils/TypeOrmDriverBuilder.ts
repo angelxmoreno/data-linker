@@ -4,7 +4,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import { DataSourceOptions } from 'typeorm';
 import appConfig from '../config';
 
-export type DatabaseTypes = 'mysql' | 'postgresql';
+export type DatabaseTypes = 'mysql' | 'postgres';
 export type DriverBuilderOptions = {
     sharedOptions: Partial<BaseDataSourceOptions>;
     mysql?: MysqlConnectionOptions;
@@ -21,7 +21,7 @@ export class TypeOrmDriverBuilder {
                 dbOptions = { ...options.sharedOptions, ...options.mysql };
                 break;
 
-            case 'postgresql':
+            case 'postgres':
                 dbOptions = { ...options.sharedOptions, ...options.postgres };
                 break;
 

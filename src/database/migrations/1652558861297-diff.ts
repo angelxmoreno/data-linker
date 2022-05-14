@@ -10,7 +10,7 @@ export class diff1652558861297 implements MigrationInterface {
             return this.runMysqlUp(queryRunner);
         }
 
-        if (databaseType === 'postgresql') {
+        if (databaseType === 'postgres') {
             return this.runPostgresUp(queryRunner);
         }
     }
