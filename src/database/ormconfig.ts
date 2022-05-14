@@ -25,5 +25,5 @@ const options: DriverBuilderOptions = {
     },
 };
 
-const dbOptions = TypeOrmDriverBuilder.build(appConfig.database.url, options);
+const dbOptions = TypeOrmDriverBuilder.build(options);
 export default dbOptions;
