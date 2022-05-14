@@ -11,6 +11,9 @@ import { Exclude } from 'class-transformer';
 import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
+import inflection from 'inflection';
+
+export type SimpleWhere<T> = Partial<Record<keyof T, PropertyKey>>;
 
 export type PaginatedItems<T> = {
     pagination: {
@@ -20,6 +23,25 @@ export type PaginatedItems<T> = {
         totalPages: number;
     };
     items: T[];
+};
+
+type ApplyPaginationParams<T> = {
+    limit: number;
+    count: number;
+    page: number;
+    items: T[];
+};
+
+export const applyPagination = <T>({ limit, count, page, items }: ApplyPaginationParams<T>): PaginatedItems<T> => {
+    return {
+        pagination: {
+            limit,
+            totalItems: count,
+            page,
+            totalPages: Math.ceil(count / limit),
+        },
+        items,
+    };
 };
 
 export class EntityBase extends BaseEntity {
@@ -72,15 +94,12 @@ export class EntityBase extends BaseEntity {
 
         const [items, count] = await this.findAndCount(findOptions);
 
-        return {
-            pagination: {
-                limit,
-                totalItems: count,
-                page,
-                totalPages: Math.ceil(count / limit),
-            },
+        return applyPagination<T>({
+            limit,
+            count,
+            page,
             items,
-        };
+        });
     }
 
     static async upsertMany<T>(entityLike: DeepPartial<T>[], keys: (keyof T)[]): Promise<T[]> {
@@ -98,5 +117,45 @@ export class EntityBase extends BaseEntity {
         });
 
         return (await this.find({ where })) as unknown as T[];
+    }
+
+    static async getDistinctFieldCount<T>(field: keyof T, where: SimpleWhere<T> = {}): Promise<number> {
+        const $field = inflection.underscore(field);
+
+        const { count } = await this.createQueryBuilder()
+            .select('COUNT(DISTINCT(`' + $field + '`))', 'count')
+            .where(where)
+            .getRawOne();
+
+        return count;
+    }
+
+    static getDistinctField<T>(field: keyof T, page = 1, limit = 100, where: SimpleWhere<T> = {}) {
+        const $field = inflection.underscore(field);
+        return this.createQueryBuilder()
+            .select('DISTINCT(' + $field + ')', $field)
+            .addSelect('COUNT(*)', 'count')
+            .where(where)
+            .groupBy($field)
+            .limit(limit)
+            .offset((page - 1) * limit)
+            .getRawMany();
+    }
+
+    static async getPaginatedDistinctField<T>(
+        field: keyof T,
+        page = 1,
+        limit = 100,
+        where: SimpleWhere<T> = {},
+    ): Promise<PaginatedItems<T>> {
+        const count = await this.getDistinctFieldCount(field, where);
+        const items = await this.getDistinctField(field, page, limit, where);
+
+        return applyPagination<T>({
+            limit,
+            count,
+            page,
+            items,
+        });
     }
 }

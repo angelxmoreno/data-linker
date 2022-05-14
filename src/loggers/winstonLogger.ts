@@ -2,22 +2,13 @@ import expressWinston from 'express-winston';
 import { Request, Response } from 'express';
 import logger from '@loggers/index';
 
-type UserEntity = {
-    role: string;
-    name: string;
-};
-
-interface RequestWithUser extends Request {
-    user?: UserEntity;
-}
-
 const winstonLogger = () =>
     expressWinston.logger({
         winstonInstance: logger,
         colorize: true,
         meta: false,
         metaField: null,
-        msg: (req: RequestWithUser, res: Response) => {
+        msg: (req: Request, res: Response) => {
             const role = req.user ? req.user.role : 'guest';
             const name = req.user ? req.user.name : 'anonymous';
             return [

@@ -2,10 +2,11 @@ import AWS, { S3 } from 'aws-sdk';
 import appConfig from '../../config';
 import { Credentials } from 'aws-sdk/lib/credentials';
 import { DocumentEntity } from '@database/entities/DocumentEntity';
-import { CloudStorageInterface } from '@services/cloud-storage/CloudStorageInterface';
+import { CloudStorageInterface, GetObjectResult } from '@services/cloud-storage/CloudStorageInterface';
 import * as fs from 'fs';
 import path from 'path';
 import { instanceToPlain } from 'class-transformer';
+import { GetObjectOutput } from 'aws-sdk/clients/s3';
 
 export class S3Service implements CloudStorageInterface {
     s3: AWS.S3;
@@ -25,8 +26,17 @@ export class S3Service implements CloudStorageInterface {
         }
     }
 
-    downloadDocument(): DocumentEntity {
-        return undefined;
+    async getDocument(document: DocumentEntity): Promise<GetObjectResult<GetObjectOutput>> {
+        const params = {
+            Bucket: this.bucket,
+            Key: this.s3KeyFromDocument(document),
+        };
+
+        const result = this.s3.getObject(params);
+        const data = await result.promise();
+        const readStream = result.createReadStream();
+
+        return { data, readStream };
     }
 
     listFolders(): string[] {
