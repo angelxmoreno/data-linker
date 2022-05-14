@@ -40,7 +40,7 @@ const writeFile = async (req: Request, res: Response, next: NextFunction) => {
     await process(data, res, next);
 };
 
-router.post('/write/contents', writeContents);
-router.post('/write/file', upload.single('file'), writeFile);
+router.post('/contents', writeContents);
+router.post('/file', upload.single('file'), writeFile);
 
 export { router as WriteController };
