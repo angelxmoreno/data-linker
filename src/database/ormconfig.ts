@@ -22,6 +22,14 @@ const options: DriverBuilderOptions = {
     postgres: {
         type: 'postgres',
         url: appConfig.database.url,
+        ssl: appConfig.database.useSsl,
+        extra: {
+            ssl: !appConfig.database.useSsl
+                ? undefined
+                : {
+                      rejectUnauthorized: false,
+                  },
+        },
     },
 };
 

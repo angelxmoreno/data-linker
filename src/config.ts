@@ -6,6 +6,7 @@ const config = {
         port: env.asNumber('PORT'),
     },
     database: {
+        useSsl: env.asBoolean('DATABASE_USE_SSL'),
         url: env.asString('DATABASE_URL'),
         logging: env.asBoolean('DATABASE_LOGGING'),
         synchronize: env.asBoolean('DATABASE_SYNC'),
