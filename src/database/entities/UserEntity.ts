@@ -1,7 +1,8 @@
-import { Column, Entity, Index } from 'typeorm';
+import { BeforeInsert, Column, Entity, Index } from 'typeorm';
 import { EntityBase } from '@database/entities/EntityBase';
 import { IsNotEmpty, IsString, Length, Validate } from 'class-validator';
 import IsUniqueInTable from '@database/validators/IsUniqueInTable';
+import generator from 'generate-password';
 
 export enum UserRole {
     CONSUMER = 'consumer',
@@ -29,4 +30,18 @@ export class UserEntity extends EntityBase {
     @Index({ unique: true })
     @Validate(IsUniqueInTable, [UserEntity, 'apiKey'])
     apiKey: string;
+
+    @BeforeInsert()
+    beforeInsert() {
+        if (!this.apiKey) {
+            this.apiKey = generator.generate({
+                length: 32,
+                numbers: true,
+                symbols: false,
+                lowercase: true,
+                uppercase: true,
+                excludeSimilarCharacters: true,
+            });
+        }
+    }
 }

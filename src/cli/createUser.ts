@@ -1,7 +1,6 @@
 import '@utils/env';
 import inquirer from 'inquirer';
 import { UserEntity, UserRole } from '@database/entities/UserEntity';
-import generator from 'generate-password';
 import { AppDataSource } from '@database/data-source';
 import clear from 'clear';
 import chalk from 'chalk';
@@ -35,18 +34,9 @@ import figlet from 'figlet';
             },
         ]);
 
-        const apiKey = generator.generate({
-            length: 32,
-            numbers: true,
-            symbols: false,
-            lowercase: true,
-            uppercase: true,
-            excludeSimilarCharacters: true,
-        });
         const user = UserEntity.build<UserEntity>({
             name,
             role,
-            apiKey,
         });
         await user.save();
         console.log({ user });
