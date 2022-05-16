@@ -27,7 +27,9 @@
         "db:migration:run": "yarn typeorm migration:run -d ./src/database/data-source.ts",
         "db:migration:revert": "yarn typeorm migration:revert -d ./src/database/data-source.ts",
         "db:schema:sync": "yarn typeorm schema:sync -d ./src/database/data-source.ts",
-        "db:schema:diff": "yarn typeorm schema:log -d ./src/database/data-source.ts"
+        "db:schema:diff": "yarn typeorm schema:log -d ./src/database/data-source.ts",
+        "seed:config": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm-seeding config -r src/database/",
+        "seed:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm-seeding seed -r src/database/ --seed"
     },
     "dependencies": {
         "aws-sdk": "^2.1134.0",
@@ -64,6 +66,8 @@
         "winston": "^3.7.2"
     },
     "devDependencies": {
+        "@faker-js/faker": "^6.3.1",
+        "@jorgebodega/typeorm-seeding": "^4.0.0",
         "@types/body-parser": "^1.19.2",
         "@types/clear": "^0.1.2",
         "@types/compression": "^1.7.2",
